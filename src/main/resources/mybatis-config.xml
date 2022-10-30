@@ -8,6 +8,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="org.mariadb.jdbc.Driver"/>
+                <!--<property name="url" value="jdbc:mariadb://192.168.30.25:3306/webdb"/>-->
                 <property name="url" value="jdbc:mariadb://localhost:3306/webdb"/>
                 <property name="username" value="webuser"/>
                 <property name="password" value="webuser"/>
@@ -15,8 +16,8 @@
         </environment>
     </environments>
     <mappers>
-<!--        <mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
-<!--        <package name="org.zerock.w0929.dao"/>-->
-        <mapper resource="org/zerock/w0929/dao/TimeMapper.xml"/>
+
+        <mapper resource="org/zerock/w0929/dao/TodoMapper.xml"/>
+        <mapper resource="org/zerock/w0929/dao/LoginMapper.xml"/>
     </mappers>
 </configuration>

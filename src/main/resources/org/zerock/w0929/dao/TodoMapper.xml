@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.w0929.dao.TodoMapper">
+    <insert id="insert">
+        insert into tbl_todo (title,memo,dueDate) values (#{title}, #{memo}, #{dueDate})
+    </insert>
+
+    <select id="selectAll" resultType="org.zerock.w0929.dto.TodoDTO">
+            select * from tbl_todo order by tno desc
+    </select>
+
+    <sql id="search">
+        <where>
+            <if test="keyword != null">
+                and memo like concat('%', #{keyword}, '%')
+            </if>
+            <if test="from != null and to != null">
+                and dueDate between #{from} and #{to}
+            </if>
+            <if test="complete">
+                and complete = #{complete}
+            </if>
+        </where>
+    </sql>
+
+    <select id="getList" resultType="org.zerock.w0929.dto.TodoDTO">
+        select * from tbl_todo
+        <include refid="search"></include>
+        order by tno desc limit #{skip}, #{size}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(tno) from tbl_todo
+        <include refid="search"></include>
+    </select>
+
+    <select id="getDetail" resultType="org.zerock.w0929.dto.TodoDTO">
+        SELECT * FROM tbl_todo WHERE tno = #{tno}
+    </select>
+
+    <update id="update">
+        update tbl_todo set title = #{title}, memo = #{memo}, dueDate = #{dueDate}, complete = #{complete}, modDate = now() where tno = #{tno}
+    </update>
+
+    <delete id="delete">
+        delete from tbl_todo where tno = #{tno}
+    </delete>
+
+</mapper>
